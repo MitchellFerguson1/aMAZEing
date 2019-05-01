@@ -8,3 +8,13 @@ C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csproj.CoreC
 C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.exe
 C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.pdb
 C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.MainForm.resources
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\bin\Debug\aMAZEing.exe.config
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\bin\Debug\aMAZEing.exe
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\bin\Debug\aMAZEing.pdb
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csprojAssemblyReference.cache
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.MainForm.resources
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.Properties.Resources.resources
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csproj.GenerateResource.cache
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csproj.CoreCompileInputs.cache
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.exe
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.pdb
