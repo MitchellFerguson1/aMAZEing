@@ -1,0 +1,10 @@
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\bin\Debug\aMAZEing.exe.config
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\bin\Debug\aMAZEing.exe
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\bin\Debug\aMAZEing.pdb
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csprojResolveAssemblyReference.cache
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.Properties.Resources.resources
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csproj.GenerateResource.cache
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csproj.CoreCompileInputs.cache
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.exe
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.pdb
+C:\Users\Mitchell\source\repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.MainForm.resources
