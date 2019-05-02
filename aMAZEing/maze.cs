@@ -14,6 +14,8 @@ namespace aMAZEing
         private int columns;
         private const int CELL_SIZE = 20;
         private Pen gridPen = new Pen(Color.Black);
+        private Pen cellPen = new Pen(Color.MediumPurple);
+        private Pen cellWallPen = new Pen(Color.Blue);
         private const int TOP_PADDING = 25;
         private const int SIDE_PADDING = 25;
         private Node[,] cells;
@@ -34,9 +36,33 @@ namespace aMAZEing
             {
                 for(int column = 0; column < columns; column++)
                 {
-                    g.DrawRectangle(gridPen, new Rectangle(row * CELL_SIZE + TOP_PADDING, column * CELL_SIZE + SIDE_PADDING, CELL_SIZE, CELL_SIZE));
+                    drawRectangle(gridPen, row, column);
                 }
             }
+        }
+
+        public void generateMaze()
+        {
+            int currentRow = 0;
+            int currentColumn = 0;
+            bool hasEmptyCells = true;
+            while (hasEmptyCells)
+            {
+                //Choose random starting position (Right now is 0,0. Later will be user chosen)
+                cells[currentRow, currentColumn] = new Node();
+                if(currentRow == 0 && currentColumn == 0)
+                cells[currentRow, currentColumn].setIsStart(true);
+                drawRectangle(cellPen, currentRow, currentColumn);
+                
+                //Randomly choose a wall
+
+            }
+        }
+
+        private void drawRectangle(Pen pen, int row, int column)
+        {
+            g.DrawRectangle(pen, new Rectangle(row * CELL_SIZE + TOP_PADDING, column * CELL_SIZE + SIDE_PADDING, CELL_SIZE, CELL_SIZE));
+
         }
     }
 }

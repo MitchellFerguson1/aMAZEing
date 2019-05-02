@@ -57,9 +57,19 @@
             0,
             0,
             0});
+            this.heightNum.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.heightNum.Name = "heightNum";
             this.heightNum.Size = new System.Drawing.Size(120, 44);
             this.heightNum.TabIndex = 2;
+            this.heightNum.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // widthNum
             // 
@@ -70,9 +80,19 @@
             0,
             0,
             0});
+            this.widthNum.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.widthNum.Name = "widthNum";
             this.widthNum.Size = new System.Drawing.Size(120, 44);
             this.widthNum.TabIndex = 3;
+            this.widthNum.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // label1
             // 
