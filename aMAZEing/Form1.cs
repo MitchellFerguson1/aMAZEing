@@ -26,6 +26,7 @@ namespace aMAZEing
             int width = (int)widthNum.Value;
             maze = new Maze(this.CreateGraphics(), width, height);
             maze.createGrid();
+            maze.generateMaze();
         }
     }
 }
