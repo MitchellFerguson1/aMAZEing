@@ -11,6 +11,7 @@ namespace aMAZEing
         private Node parentNode;
         private Node up, down, left, right;
         private bool isStart, isEnd;
+        private List<int> directions = new List<int>();
 
         public Node()
         {
@@ -25,6 +26,7 @@ namespace aMAZEing
         public Node getRight() { return right; }
         public bool getIsStart() { return isStart; }
         public bool getIsEnd() { return isEnd; }
+        public List<int> getDirections() {return directions; }
 #endregion
 
 #region Setter methods
@@ -33,6 +35,7 @@ namespace aMAZEing
         public void setDown(Node down) { this.down = down; }
         public void setLeft(Node left) { this.left = left; }
         public void setRight(Node right) { this.right = right; }
+        public void addDirection(int direction) {directions.Add(direction); }
         //These two methods aren't used but are implemented for later use
         public void setIsEnd(bool isEnd) { this.isEnd = isEnd; }
         public void setIsStart(bool isStart) { this.isStart = isStart; }

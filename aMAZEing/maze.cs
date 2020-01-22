@@ -11,8 +11,8 @@ namespace aMAZEing
     class Maze
     {
         private Graphics g;
-        private int rows;
-        private int columns;
+        private int X;
+        private int Y;
         private const int CELL_SIZE = 20;
         private Pen gridPen = new Pen(Color.Black);
         private Brush cellBrush = Brushes.MediumPurple;
@@ -20,22 +20,23 @@ namespace aMAZEing
         private const int TOP_PADDING = 25;
         private const int SIDE_PADDING = 25;
         private Node[,] cells;
+        private Node wall = new Node();
 
         
-        public Maze(Graphics g, int rows, int columns)
+        public Maze(Graphics g, int X, int Y)
         {
             this.g = g;
-            this.rows = rows;
-            this.columns = columns;
+            this.X = X;
+            this.Y = Y;
             g.Clear(Color.LightGray);
-            cells = new Node[rows, columns]; //Start is always top right, end is always bottom Left
+            cells = new Node[X, Y]; //Start is always top right, end is always bottom Left
         }
 
         public void createGrid()
         {
-            for(int row = 0; row < rows; row++)
+            for(int row = 0; row < X; row++)
             {
-                for(int column = 0; column < columns; column++)
+                for(int column = 0; column < Y; column++)
                 {
                     drawRectangle(gridPen, row, column);
                 }
@@ -44,8 +45,8 @@ namespace aMAZEing
 
         public void generateMaze()
         {
-            int currentRow = 0;
-            int currentColumn = 0;
+            int currentX = 0;
+            int currentY = 0;
             bool hasEmptyCells = true;
             bool beginning = true;
             Node currentNode = new Node(); //This should be overriddent later
@@ -55,80 +56,143 @@ namespace aMAZEing
                 //Choose random starting position (Right now is 0,0. Later will be user chosen)
                 if (beginning)
                 {
-                    cells[currentRow, currentColumn] = new Node();
-                    if (currentRow == 0 && currentColumn == 0)
-                        cells[currentRow, currentColumn].setIsStart(true);
-                    currentNode = cells[currentRow, currentColumn];
+                    cells[currentX, currentY] = new Node();
+                    if (currentX == 0 && currentY == 0)
+                        cells[currentX, currentY].setIsStart(true);
+                    currentNode = cells[currentX, currentY];
                 }
-                fillRectangle(cellBrush, currentRow, currentColumn);
-                Thread.Sleep(1000);
+                if(currentX == 0 && currentY == 0)
+                    fillRectangle(cellBrush, currentX, currentY, currentNode.getDirections());
+                Thread.Sleep(500);
 
                 //See if cell has any empty neighbors, if not find a parent that has empty neighbors
                 if(!currentNode.hasEmptyNeighbor())
                 {
-                    newNode = findEmptyNeighbor(currentNode);
-                    if (newNode.getIsStart())
+                    currentNode = findEmptyNeighbor(currentNode);
+                    if (currentNode.getIsStart())
                         break;
-                }
 
-                //Randomly choose a wall that isn't occupied
-                int newRow = currentRow;
-                int newColumn = currentColumn;
-                int direction = -1;
-                while (newRow == currentRow && newColumn == currentColumn)
-                {
-                    direction = new Random().Next(1, 5);
-                    switch (direction) //1 = up, 2 = down, 3 = left, 4 = right
+                    currentX = 0;
+                    currentY = 0;
+
+                    //Find index of the item
+                    for(int x = 0; x < X - 1; x++)
                     {
-                        case 1:
-                            newRow--;
-                            if (newRow < 0 || cells[newRow, currentColumn] != null)
-                                newRow++;
-                            break;
-                        case 2:
-                            newRow++;
-                            if (newRow >= rows || cells[newRow, currentColumn] != null)
-                                newRow--;
-                            break;
-                        case 3:
-                            newColumn--;
-                            if (newColumn < 0 || cells[currentRow, newColumn] != null)
-                                newColumn++;
-                            break;
-                        case 4:
-                            newColumn++;
-                            if (newColumn >= columns || cells[currentRow, newColumn] != null)
-                                newColumn--;
+                        for(int y = 0; y < Y - 1; y++)
+                        {
+                            if(cells[x, y] != null && cells[x, y].Equals(currentNode))
+                            {
+                                currentX = x;
+                                currentY = y;
+                                break;
+                            }
+                        }
+                        if(currentX != 0)
                             break;
                     }
                 }
 
+                //Randomly choose a wall that isn't occupied
+                int newX = currentX;
+                int newY = currentY;
+                int direction = -1;
+                while (newX == currentX && newY == currentY)
+                {
+                    direction = new Random().Next(1, 5);
+                    switch (direction) //1 = left, 2 = right, 3 = up, 4 = down
+                    {
+                        case 1:
+                            newX--;
+                            if (newX < 0 || cells[newX, currentY] != null)
+                                newX++;
+                            break;
+                        case 2:
+                            newX++;
+                            if (newX >= X || cells[newX, currentY] != null)
+                                newX--;
+                            break;
+                        case 3:
+                            newY--;
+                            if (newY < 0 || cells[currentX, newY] != null)
+                                newY++;
+                            break;
+                        case 4:
+                            newY++;
+                            if (newY >= Y || cells[currentX, newY] != null)
+                                newY--;
+                            break;
+                    }
+                }
+
+                currentNode.addDirection(direction);
+
                 //Create a new current cell
-                cells[newRow, newColumn] = new Node();
-                newNode = cells[newRow, newColumn];
-                newNode.setParent(currentNode);
-                switch (direction) //1 = up, 2 = down, 3 = left, 4 = right
+                cells[newX, newY] = new Node();
+                newNode = cells[newX, newY];
+
+                switch(direction)
                 {
                     case 1:
-                        currentNode.setUp(newNode);
-                        newNode.setDown(currentNode);
+                        newNode.addDirection(2);
                         break;
+                        
                     case 2:
-                        currentNode.setDown(newNode);
-                        newNode.setUp(currentNode);
+                        newNode.addDirection(1);
                         break;
+
                     case 3:
-                        currentNode.setLeft(newNode);
-                        newNode.setRight(currentNode);
+                        newNode.addDirection(4);
                         break;
+
                     case 4:
-                        currentNode.setRight(newNode);
-                        newNode.setLeft(currentNode);
+                        newNode.addDirection(3);
                         break;
                 }
-                currentRow = newRow;
-                currentColumn = newColumn;
+
+                //Put here to help debugging
+                if(newX != 0 || newY != 0)
+                {
+                    fillRectangle(cellBrush, newX, newY, newNode.getDirections());
+                    fillRectangle(cellBrush, currentX, currentY, currentNode.getDirections());
+                }
+
+                newNode.setParent(currentNode);
+                currentX = newX;
+                currentY = newY;
                 currentNode = newNode;
+
+                //Set neighbors
+                if(currentNode.getParent() == null){
+                    currentNode.setUp(wall);
+                    currentNode.setLeft(wall);
+                }
+                else{
+                    if(currentX > 0 && cells[currentX - 1, currentY] != null){
+                        currentNode.setLeft(cells[currentX - 1, currentY]);
+                        cells[currentX - 1, currentY].setRight(currentNode);
+                    } else if (currentX == 0) 
+                        currentNode.setLeft(wall);
+
+                    if(currentX < X - 1 && cells[currentX + 1, currentY] != null){
+                        currentNode.setRight(cells[currentX + 1, currentY]);
+                        cells[currentX + 1, currentY].setLeft(currentNode);
+                    } else if (currentX + 1 == X) 
+                        currentNode.setRight(wall);
+
+                    if(currentY > 0 && cells[currentX, currentY - 1] != null){
+                        currentNode.setUp(cells[currentX, currentY - 1]);
+                        cells[currentX, currentY - 1].setDown(currentNode);
+                    } else if (currentY == 0) 
+                        currentNode.setUp(wall);
+
+                    if(currentY < Y - 1 && cells[currentX, currentY + 1] != null){
+                        currentNode.setDown(cells[currentX, currentY + 1]);
+                        cells[currentX, currentY + 1].setUp(currentNode);
+                    } else if (currentY + 1 == Y) 
+                        currentNode.setDown(wall);
+                }
+
+                beginning = false;
             }
         }
 
@@ -137,10 +201,53 @@ namespace aMAZEing
             g.DrawRectangle(pen, new Rectangle(row * CELL_SIZE + TOP_PADDING, column * CELL_SIZE + SIDE_PADDING, CELL_SIZE, CELL_SIZE));
         }
 
-        private void fillRectangle(Brush brush, int row, int column)
+        private void fillRectangle(Brush brush, int row, int column, List<int> directions)
         {
             g.FillRectangle(brush, new Rectangle(row * CELL_SIZE + TOP_PADDING, column * CELL_SIZE + SIDE_PADDING, CELL_SIZE, CELL_SIZE));
 
+            //Draw the walls
+            //1 = left, 2 = right, 3 = up, 4 = down
+            for(int path = 1; path <= 4; path++)
+            {
+                if(!directions.Contains(path))
+                {
+                    switch(path)
+                    {
+                        case 1:
+                            g.DrawLine(Pens.Black, 
+                                row * CELL_SIZE + TOP_PADDING, 
+                                column * CELL_SIZE + SIDE_PADDING, 
+                                row * CELL_SIZE + TOP_PADDING, 
+                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE);
+                            break;
+
+                        case 2:
+                            g.DrawLine(Pens.Black, 
+                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE,
+                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE,
+                                row * CELL_SIZE + TOP_PADDING, 
+                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE);
+                            break;
+
+                        case 3:
+                            g.DrawLine(Pens.Black, 
+                                row * CELL_SIZE + TOP_PADDING, 
+                                column * CELL_SIZE + SIDE_PADDING, 
+                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE, 
+                                column * CELL_SIZE + SIDE_PADDING);
+                            break;
+
+                            /*
+                        case 4:
+                            g.DrawLine(Pens.Black, 
+                                row * CELL_SIZE + TOP_PADDING, 
+                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE, 
+                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE, 
+                                column * CELL_SIZE + SIDE_PADDING);
+                            break; */
+                    }
+                }
+            }
         }
 
         private Node findEmptyNeighbor(Node currentNode)
@@ -150,7 +257,7 @@ namespace aMAZEing
             else if (currentNode.hasEmptyNeighbor() == false && currentNode.getIsStart()) //If the node is the start node return the node
                 return currentNode;
             else //Otherwise go to the parent
-                findEmptyNeighbor(currentNode.getParent());
+                return findEmptyNeighbor(currentNode.getParent());
             return null; //This should never be called
         }
     }
