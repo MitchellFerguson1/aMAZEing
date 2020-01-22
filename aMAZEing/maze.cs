@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Threading;
+using System.Diagnostics;
 
 namespace aMAZEing
 {
@@ -63,7 +64,8 @@ namespace aMAZEing
                 }
                 if(currentX == 0 && currentY == 0)
                     fillRectangle(cellBrush, currentX, currentY, currentNode.getDirections());
-                Thread.Sleep(500);
+
+                Thread.Sleep(5);
 
                 //See if cell has any empty neighbors, if not find a parent that has empty neighbors
                 if(!currentNode.hasEmptyNeighbor())
@@ -72,24 +74,27 @@ namespace aMAZEing
                     if (currentNode.getIsStart())
                         break;
 
-                    currentX = 0;
-                    currentY = 0;
+                    currentX = -1;
+                    currentY = -1;
 
                     //Find index of the item
-                    for(int x = 0; x < X - 1; x++)
-                    {
-                        for(int y = 0; y < Y - 1; y++)
+                    if (currentX == -1 && currentY == -1)
+	                {
+		                for(int x = 0; x <= X - 1; x++)
                         {
-                            if(cells[x, y] != null && cells[x, y].Equals(currentNode))
+                            for(int y = 0; y <= Y - 1; y++)
                             {
-                                currentX = x;
-                                currentY = y;
-                                break;
+                                if(cells[x, y] != null && cells[x, y].Equals(currentNode))
+                                {
+                                    currentX = x;
+                                    currentY = y;
+                                    break;
+                                }
                             }
-                        }
-                        if(currentX != 0)
-                            break;
-                    }
+                            if(currentX != -1)
+                                break;
+                        } 
+	                }
                 }
 
                 //Randomly choose a wall that isn't occupied
@@ -152,8 +157,8 @@ namespace aMAZEing
                 //Put here to help debugging
                 if(newX != 0 || newY != 0)
                 {
-                    fillRectangle(cellBrush, newX, newY, newNode.getDirections());
                     fillRectangle(cellBrush, currentX, currentY, currentNode.getDirections());
+                    fillRectangle(cellBrush, newX, newY, newNode.getDirections());
                 }
 
                 newNode.setParent(currentNode);
@@ -224,9 +229,9 @@ namespace aMAZEing
                         case 2:
                             g.DrawLine(Pens.Black, 
                                 row * CELL_SIZE + TOP_PADDING + CELL_SIZE,
-                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE,
-                                row * CELL_SIZE + TOP_PADDING, 
-                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE);
+                                column * CELL_SIZE + SIDE_PADDING,
+                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE, 
+                                column * CELL_SIZE + SIDE_PADDING);
                             break;
 
                         case 3:
@@ -237,14 +242,13 @@ namespace aMAZEing
                                 column * CELL_SIZE + SIDE_PADDING);
                             break;
 
-                            /*
                         case 4:
                             g.DrawLine(Pens.Black, 
                                 row * CELL_SIZE + TOP_PADDING, 
                                 column * CELL_SIZE + SIDE_PADDING + CELL_SIZE, 
-                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE, 
-                                column * CELL_SIZE + SIDE_PADDING);
-                            break; */
+                                row * CELL_SIZE + TOP_PADDING, 
+                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE);
+                            break;
                     }
                 }
             }
