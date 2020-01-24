@@ -18,12 +18,12 @@ namespace aMAZEing
         private Pen gridPen = new Pen(Color.Black);
         private Brush cellBrush = Brushes.MediumPurple;
         private Pen cellWallPen = new Pen(Color.Blue);
-        private const int TOP_PADDING = 25;
-        private const int SIDE_PADDING = 25;
+        private const int TOP_PADDING = 20;
+        private const int SIDE_PADDING = 20;
         private Node[,] cells;
         private Node wall = new Node();
 
-        
+
         public Maze(Graphics g, int X, int Y)
         {
             this.g = g;
@@ -35,9 +35,9 @@ namespace aMAZEing
 
         public void createGrid()
         {
-            for(int row = 0; row < X; row++)
+            for (int row = 0; row < X; row++)
             {
-                for(int column = 0; column < Y; column++)
+                for (int column = 0; column < Y; column++)
                 {
                     drawRectangle(gridPen, row, column);
                 }
@@ -62,13 +62,13 @@ namespace aMAZEing
                         cells[currentX, currentY].setIsStart(true);
                     currentNode = cells[currentX, currentY];
                 }
-                if(currentX == 0 && currentY == 0)
+                if (currentX == 0 && currentY == 0)
                     fillRectangle(cellBrush, currentX, currentY, currentNode.getDirections());
 
                 Thread.Sleep(5);
 
                 //See if cell has any empty neighbors, if not find a parent that has empty neighbors
-                if(!currentNode.hasEmptyNeighbor())
+                if (!currentNode.hasEmptyNeighbor())
                 {
                     currentNode = findEmptyNeighbor(currentNode);
                     if (currentNode.getIsStart())
@@ -79,22 +79,22 @@ namespace aMAZEing
 
                     //Find index of the item
                     if (currentX == -1 && currentY == -1)
-	                {
-		                for(int x = 0; x <= X - 1; x++)
+                    {
+                        for (int x = 0; x <= X - 1; x++)
                         {
-                            for(int y = 0; y <= Y - 1; y++)
+                            for (int y = 0; y <= Y - 1; y++)
                             {
-                                if(cells[x, y] != null && cells[x, y].Equals(currentNode))
+                                if (cells[x, y] != null && cells[x, y].Equals(currentNode))
                                 {
                                     currentX = x;
                                     currentY = y;
                                     break;
                                 }
                             }
-                            if(currentX != -1)
+                            if (currentX != -1)
                                 break;
-                        } 
-	                }
+                        }
+                    }
                 }
 
                 //Randomly choose a wall that isn't occupied
@@ -135,12 +135,12 @@ namespace aMAZEing
                 cells[newX, newY] = new Node();
                 newNode = cells[newX, newY];
 
-                switch(direction)
+                switch (direction)
                 {
                     case 1:
                         newNode.addDirection(2);
                         break;
-                        
+
                     case 2:
                         newNode.addDirection(1);
                         break;
@@ -155,7 +155,7 @@ namespace aMAZEing
                 }
 
                 //Put here to help debugging
-                if(newX != 0 || newY != 0)
+                if (newX != 0 || newY != 0)
                 {
                     fillRectangle(cellBrush, currentX, currentY, currentNode.getDirections());
                     fillRectangle(cellBrush, newX, newY, newNode.getDirections());
@@ -167,38 +167,75 @@ namespace aMAZEing
                 currentNode = newNode;
 
                 //Set neighbors
-                if(currentNode.getParent() == null){
+                if (currentNode.getParent() == null)
+                {
                     currentNode.setUp(wall);
                     currentNode.setLeft(wall);
                 }
-                else{
-                    if(currentX > 0 && cells[currentX - 1, currentY] != null){
+                else
+                {
+                    if (currentX > 0 && cells[currentX - 1, currentY] != null)
+                    {
                         currentNode.setLeft(cells[currentX - 1, currentY]);
                         cells[currentX - 1, currentY].setRight(currentNode);
-                    } else if (currentX == 0) 
+                    }
+                    else if (currentX == 0)
                         currentNode.setLeft(wall);
 
-                    if(currentX < X - 1 && cells[currentX + 1, currentY] != null){
+                    if (currentX < X - 1 && cells[currentX + 1, currentY] != null)
+                    {
                         currentNode.setRight(cells[currentX + 1, currentY]);
                         cells[currentX + 1, currentY].setLeft(currentNode);
-                    } else if (currentX + 1 == X) 
+                    }
+                    else if (currentX + 1 == X)
                         currentNode.setRight(wall);
 
-                    if(currentY > 0 && cells[currentX, currentY - 1] != null){
+                    if (currentY > 0 && cells[currentX, currentY - 1] != null)
+                    {
                         currentNode.setUp(cells[currentX, currentY - 1]);
                         cells[currentX, currentY - 1].setDown(currentNode);
-                    } else if (currentY == 0) 
+                    }
+                    else if (currentY == 0)
                         currentNode.setUp(wall);
 
-                    if(currentY < Y - 1 && cells[currentX, currentY + 1] != null){
+                    if (currentY < Y - 1 && cells[currentX, currentY + 1] != null)
+                    {
                         currentNode.setDown(cells[currentX, currentY + 1]);
                         cells[currentX, currentY + 1].setUp(currentNode);
-                    } else if (currentY + 1 == Y) 
+                    }
+                    else if (currentY + 1 == Y)
                         currentNode.setDown(wall);
                 }
 
                 beginning = false;
             }
+        }
+
+        public void setStart(int x, int y)
+        {
+            int nodeX = converter(x);
+            int nodeY = converter(y);
+
+            Node startNode = cells[nodeX, nodeY];
+            startNode.setIsStart(true);
+
+            fillRectangle(Brushes.Green, nodeX, nodeY, startNode.getDirections());
+        }
+
+        public void setFinish(int x, int y)
+        {
+            int nodeX = converter(x);
+            int nodeY = converter(y);
+
+            Node finishNode = cells[nodeX, nodeY];
+            finishNode.setIsEnd(true);
+
+            fillRectangle(Brushes.Red, nodeX, nodeY, finishNode.getDirections());
+        }
+
+        private int converter(int num)
+        {
+            return ((num - SIDE_PADDING) - (num % CELL_SIZE)) / CELL_SIZE;
         }
 
         private void drawRectangle(Pen pen, int row, int column)
@@ -212,41 +249,41 @@ namespace aMAZEing
 
             //Draw the walls
             //1 = left, 2 = right, 3 = up, 4 = down
-            for(int path = 1; path <= 4; path++)
+            for (int path = 1; path <= 4; path++)
             {
-                if(!directions.Contains(path))
+                if (!directions.Contains(path))
                 {
-                    switch(path)
+                    switch (path)
                     {
                         case 1:
-                            g.DrawLine(Pens.Black, 
-                                row * CELL_SIZE + TOP_PADDING, 
-                                column * CELL_SIZE + SIDE_PADDING, 
-                                row * CELL_SIZE + TOP_PADDING, 
+                            g.DrawLine(Pens.Black,
+                                row * CELL_SIZE + TOP_PADDING,
+                                column * CELL_SIZE + SIDE_PADDING,
+                                row * CELL_SIZE + TOP_PADDING,
                                 column * CELL_SIZE + SIDE_PADDING + CELL_SIZE);
                             break;
 
                         case 2:
-                            g.DrawLine(Pens.Black, 
+                            g.DrawLine(Pens.Black,
                                 row * CELL_SIZE + TOP_PADDING + CELL_SIZE,
                                 column * CELL_SIZE + SIDE_PADDING,
-                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE, 
+                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE,
                                 column * CELL_SIZE + SIDE_PADDING);
                             break;
 
                         case 3:
-                            g.DrawLine(Pens.Black, 
-                                row * CELL_SIZE + TOP_PADDING, 
-                                column * CELL_SIZE + SIDE_PADDING, 
-                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE, 
+                            g.DrawLine(Pens.Black,
+                                row * CELL_SIZE + TOP_PADDING,
+                                column * CELL_SIZE + SIDE_PADDING,
+                                row * CELL_SIZE + TOP_PADDING + CELL_SIZE,
                                 column * CELL_SIZE + SIDE_PADDING);
                             break;
 
                         case 4:
-                            g.DrawLine(Pens.Black, 
-                                row * CELL_SIZE + TOP_PADDING, 
-                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE, 
-                                row * CELL_SIZE + TOP_PADDING, 
+                            g.DrawLine(Pens.Black,
+                                row * CELL_SIZE + TOP_PADDING,
+                                column * CELL_SIZE + SIDE_PADDING + CELL_SIZE,
+                                row * CELL_SIZE + TOP_PADDING,
                                 column * CELL_SIZE + SIDE_PADDING + CELL_SIZE);
                             break;
                     }
@@ -262,7 +299,6 @@ namespace aMAZEing
                 return currentNode;
             else //Otherwise go to the parent
                 return findEmptyNeighbor(currentNode.getParent());
-            return null; //This should never be called
         }
     }
 }

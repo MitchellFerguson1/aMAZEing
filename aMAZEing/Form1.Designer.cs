@@ -33,16 +33,16 @@
             this.widthNum = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.SetStFn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.heightNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthNum)).BeginInit();
             this.SuspendLayout();
             // 
             // generateMazeBtn
             // 
-            this.generateMazeBtn.Location = new System.Drawing.Point(26, 1006);
-            this.generateMazeBtn.Margin = new System.Windows.Forms.Padding(6);
+            this.generateMazeBtn.Location = new System.Drawing.Point(13, 523);
             this.generateMazeBtn.Name = "generateMazeBtn";
-            this.generateMazeBtn.Size = new System.Drawing.Size(322, 146);
+            this.generateMazeBtn.Size = new System.Drawing.Size(161, 76);
             this.generateMazeBtn.TabIndex = 1;
             this.generateMazeBtn.Text = "Generate a Maze";
             this.generateMazeBtn.UseVisualStyleBackColor = true;
@@ -51,9 +51,10 @@
             // heightNum
             // 
             this.heightNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightNum.Location = new System.Drawing.Point(472, 1029);
+            this.heightNum.Location = new System.Drawing.Point(236, 535);
+            this.heightNum.Margin = new System.Windows.Forms.Padding(2);
             this.heightNum.Maximum = new decimal(new int[] {
-            24,
+            25,
             0,
             0,
             0});
@@ -63,7 +64,7 @@
             0,
             0});
             this.heightNum.Name = "heightNum";
-            this.heightNum.Size = new System.Drawing.Size(120, 44);
+            this.heightNum.Size = new System.Drawing.Size(60, 26);
             this.heightNum.TabIndex = 2;
             this.heightNum.Value = new decimal(new int[] {
             10,
@@ -74,9 +75,10 @@
             // widthNum
             // 
             this.widthNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.widthNum.Location = new System.Drawing.Point(472, 1089);
+            this.widthNum.Location = new System.Drawing.Point(236, 566);
+            this.widthNum.Margin = new System.Windows.Forms.Padding(2);
             this.widthNum.Maximum = new decimal(new int[] {
-            31,
+            60,
             0,
             0,
             0});
@@ -86,7 +88,7 @@
             0,
             0});
             this.widthNum.Name = "widthNum";
-            this.widthNum.Size = new System.Drawing.Size(120, 44);
+            this.widthNum.Size = new System.Drawing.Size(60, 26);
             this.widthNum.TabIndex = 3;
             this.widthNum.Value = new decimal(new int[] {
             10,
@@ -98,9 +100,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(357, 1031);
+            this.label1.Location = new System.Drawing.Point(178, 536);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(118, 37);
+            this.label1.Size = new System.Drawing.Size(60, 20);
             this.label1.TabIndex = 4;
             this.label1.Text = "Height:";
             // 
@@ -108,28 +111,40 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(357, 1091);
+            this.label2.Location = new System.Drawing.Point(178, 567);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(109, 37);
+            this.label2.Size = new System.Drawing.Size(54, 20);
             this.label2.TabIndex = 5;
             this.label2.Text = "Width:";
             // 
+            // SetStFn
+            // 
+            this.SetStFn.Location = new System.Drawing.Point(301, 523);
+            this.SetStFn.Name = "SetStFn";
+            this.SetStFn.Size = new System.Drawing.Size(161, 76);
+            this.SetStFn.TabIndex = 6;
+            this.SetStFn.Text = "Set start and finish";
+            this.SetStFn.UseVisualStyleBackColor = true;
+            this.SetStFn.Click += new System.EventHandler(this.SetStFn_Click);
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.LightGray;
-            this.ClientSize = new System.Drawing.Size(2740, 1175);
+            this.ClientSize = new System.Drawing.Size(1370, 599);
+            this.Controls.Add(this.SetStFn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.widthNum);
             this.Controls.Add(this.heightNum);
             this.Controls.Add(this.generateMazeBtn);
-            this.Margin = new System.Windows.Forms.Padding(6);
-            this.MinimumSize = new System.Drawing.Size(2734, 1246);
+            this.MinimumSize = new System.Drawing.Size(967, 579);
             this.Name = "MainForm";
             this.Text = "aMAZEing";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseClick);
             ((System.ComponentModel.ISupportInitialize)(this.heightNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthNum)).EndInit();
             this.ResumeLayout(false);
@@ -143,6 +158,7 @@
         private System.Windows.Forms.NumericUpDown widthNum;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button SetStFn;
     }
 }
 
