@@ -43,9 +43,7 @@ namespace aMAZEing
 
         public bool hasEmptyNeighbor()
         {
-            if (up == null || down == null || left == null || right == null)
-                return true;
-            return false;
+            return (up == null || down == null || left == null || right == null);
         }
     }
 }

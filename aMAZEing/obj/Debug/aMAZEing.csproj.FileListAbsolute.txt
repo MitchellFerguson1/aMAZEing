@@ -17,3 +17,4 @@ C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csproj.Generate
 C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.exe
 C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.pdb
 C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csprojAssemblyReference.cache
+C:\Users\nowhe\Source\Repos\aMAZEing\aMAZEing\obj\Debug\aMAZEing.csproj.CoreCompileInputs.cache

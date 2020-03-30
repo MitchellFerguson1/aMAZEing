@@ -17,7 +17,7 @@ namespace aMAZEing
         private const int CELL_SIZE = 20;
         private Pen gridPen = new Pen(Color.Black);
         private Brush cellBrush = Brushes.MediumPurple;
-        private Pen cellWallPen = new Pen(Color.Blue);
+        private Pen cellWallPen = new Pen(Color.Black);
         private const int TOP_PADDING = 20;
         private const int SIDE_PADDING = 20;
         private Node[,] cells;
@@ -256,7 +256,7 @@ namespace aMAZEing
                     switch (path)
                     {
                         case 1:
-                            g.DrawLine(Pens.Black,
+                            g.DrawLine(cellWallPen,
                                 row * CELL_SIZE + TOP_PADDING,
                                 column * CELL_SIZE + SIDE_PADDING,
                                 row * CELL_SIZE + TOP_PADDING,
@@ -264,7 +264,7 @@ namespace aMAZEing
                             break;
 
                         case 2:
-                            g.DrawLine(Pens.Black,
+                            g.DrawLine(cellWallPen,
                                 row * CELL_SIZE + TOP_PADDING + CELL_SIZE,
                                 column * CELL_SIZE + SIDE_PADDING,
                                 row * CELL_SIZE + TOP_PADDING + CELL_SIZE,
@@ -272,7 +272,7 @@ namespace aMAZEing
                             break;
 
                         case 3:
-                            g.DrawLine(Pens.Black,
+                            g.DrawLine(cellWallPen,
                                 row * CELL_SIZE + TOP_PADDING,
                                 column * CELL_SIZE + SIDE_PADDING,
                                 row * CELL_SIZE + TOP_PADDING + CELL_SIZE,
@@ -280,7 +280,7 @@ namespace aMAZEing
                             break;
 
                         case 4:
-                            g.DrawLine(Pens.Black,
+                            g.DrawLine(cellWallPen,
                                 row * CELL_SIZE + TOP_PADDING,
                                 column * CELL_SIZE + SIDE_PADDING + CELL_SIZE,
                                 row * CELL_SIZE + TOP_PADDING,
